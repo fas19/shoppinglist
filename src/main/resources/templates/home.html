@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${products}">
+    <h2 th:case="null">No products yet</h2>
+    <div th:case="*">
+        <h2>Products</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Is in shopping list</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.isInShoppingList}"></td>
+                <td><a th:href="@{/change/{id}(id=${product.id})}">Setja í / taka úr körfu</a></td>
+                <td><a th:href="@{/delete/{id}(id=${product.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/addproduct">Add a new product</a></p>
+</div>
+</body>
+</html>
