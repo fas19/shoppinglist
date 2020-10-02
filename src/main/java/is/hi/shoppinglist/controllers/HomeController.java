@@ -51,4 +51,12 @@ public class HomeController {
         model.addAttribute("products", productService.findAll());
         return "home";
     }
+
+    @RequestMapping(value="delete/{id}", method=RequestMethod.GET)
+    public String deleteProduct(@PathVariable("id")long id, Model model){
+        Product product = productService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid product ID"));
+        productService.delete(product);
+        model.addAttribute("products",productService.findAll());
+        return "home";
+    }
 }
