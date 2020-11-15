@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div sec:authorize="isAuthenticated()" >
+        <h1> Hæ, <span sec:authentication="name"></span></h1>
+        <a href="/products" class="btn btn-success btn-sm " role="button">Fara í innkaupalista</a>
+    </div>
+    <div sec:authorize="!isAuthenticated()">
+        <h1> Þú verður að skrá þig inn til að nota innkaupalistann</h1>
+    </div>
+</div>
+</body>
+</html>

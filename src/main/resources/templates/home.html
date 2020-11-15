@@ -22,6 +22,7 @@
                 <td th:text="${product.isInShoppingList}"></td>
                 <td><a th:href="@{/change/{id}(id=${product.id})}">Setja í / taka úr körfu</a></td>
                 <td><a th:href="@{/delete/{id}(id=${product.id})}">Delete</a></td>
+<!--                <td th:text="${product.user.toString()}"></th:text>-->
             </tr>
             </tbody>
         </table>

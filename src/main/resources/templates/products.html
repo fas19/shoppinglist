@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/tmpl}">
+<head>
+    <title>Lessons</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>Í innkaupalista</h2>
+    <div>
+        <table>
+            <tr>
+                <th>Vara</th>
+                <th> Taka úr innkaupalista </th>
+                <th>Henda</th>
+            </tr>
+            <span th:each="prod : ${products}">
+                <tr th:if="${prod.isIsInShoppingList()}">
+                    <td th:text="${prod.getName()}"></td>
+                    <td><a th:href="@{/products/change/{id}(id = ${prod.getId()})}">Taka úr innkaupalista</a></td>
+                    <td><a th:href="@{/products/delete/{id}(id = ${prod.getId()})}">Henda</a></td>
+                </tr>
+            </span>
+        </table>
+    </div>
+
+    <div>
+        <a href="/addproduct">Add a product</a>
+    </div>
+
+    <h2>Ekki í innkaupalista</h2>
+    <div>
+        <table>
+            <tr>
+                <th>Vara</th>
+                <th> Setja í innkaupalista </th>
+                <th>Henda</th>
+            </tr>
+            <span th:each="prod : ${products}">
+                <tr th:if="${!prod.isIsInShoppingList()}">
+                    <td th:text="${prod.getName()}"></td>
+                    <td><a th:href="@{/products/change/{id}(id = ${prod.getId()})}">Setja í innkaupalista</a></td>
+                    <td><a th:href="@{/products/delete/{id}(id = ${prod.getId()})}">Henda</a></td>
+                </tr>
+            </span>
+        </table>
+    </div>
+
+
+
+
+
+</div>
+</body>
+</html>

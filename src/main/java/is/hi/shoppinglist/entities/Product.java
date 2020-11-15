@@ -1,11 +1,8 @@
 package is.hi.shoppinglist.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity(name="Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +11,25 @@ public class Product {
     private String name;
     private boolean isInShoppingList;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public Product() {
     }
 
-    public Product(String name, boolean isInShoppingList) {
+    public Product(String name, boolean isInShoppingList, User user) {
         this.name = name;
         this.isInShoppingList = isInShoppingList;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getId() {

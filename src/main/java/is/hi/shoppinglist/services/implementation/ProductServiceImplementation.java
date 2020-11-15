@@ -6,6 +6,7 @@ import is.hi.shoppinglist.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,18 @@ public class ProductServiceImplementation implements ProductService {
     @Override
     public Optional<Product> findById(Long id) {
         return repository.findById(id);
+    }
+
+    public List<Product> findByUserId (Long id){
+        List<Product> all = repository.findAll();
+        List<Product> userProducts = new ArrayList<>();
+
+        for (Product temp : all){
+            if (temp.getUser().getId()==id){
+                userProducts.add(temp);
+            }
+        }
+        return userProducts;
     }
 
 }
