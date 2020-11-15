@@ -7,6 +7,11 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <li class="list-group-item d-flex">
+        <a class = "btn btn-primary btn-sm" href="/products">Innkaupalisti</a>
+        <a class = "btn btn-success btn-sm" href="/addproduct">Bæta við vöru</a>
+        <a class = "btn btn-danger btn-sm" href="/deleteproduct">Henda vöru úr lista</a>
+    </li>
 
     <h2>Í innkaupalista</h2>
     <div>
@@ -14,21 +19,17 @@
             <tr>
                 <th>Vara</th>
                 <th> Taka úr innkaupalista </th>
-                <th>Henda</th>
             </tr>
             <span th:each="prod : ${products}">
                 <tr th:if="${prod.isIsInShoppingList()}">
                     <td th:text="${prod.getName()}"></td>
-                    <td><a th:href="@{/products/change/{id}(id = ${prod.getId()})}">Taka úr innkaupalista</a></td>
-                    <td><a th:href="@{/products/delete/{id}(id = ${prod.getId()})}">Henda</a></td>
+                    <td><a class = "btn btn-warning btn-sm" th:href="@{/products/change/{id}(id = ${prod.getId()})}">Taka úr innkaupalista</a></td>
                 </tr>
             </span>
         </table>
     </div>
 
-    <div>
-        <a href="/addproduct">Add a product</a>
-    </div>
+
 
     <h2>Ekki í innkaupalista</h2>
     <div>
@@ -36,13 +37,11 @@
             <tr>
                 <th>Vara</th>
                 <th> Setja í innkaupalista </th>
-                <th>Henda</th>
             </tr>
             <span th:each="prod : ${products}">
                 <tr th:if="${!prod.isIsInShoppingList()}">
                     <td th:text="${prod.getName()}"></td>
-                    <td><a th:href="@{/products/change/{id}(id = ${prod.getId()})}">Setja í innkaupalista</a></td>
-                    <td><a th:href="@{/products/delete/{id}(id = ${prod.getId()})}">Henda</a></td>
+                    <td><a class = "btn btn-success btn-sm" th:href="@{/products/change/{id}(id = ${prod.getId()})}">Setja í innkaupalista</a></td>
                 </tr>
             </span>
         </table>

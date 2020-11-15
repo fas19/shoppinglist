@@ -13,43 +13,21 @@
         <a class = "btn btn-danger btn-sm" href="/deleteproduct">Henda vöru úr lista</a>
     </li>
 
-    <form action="#" th:action="@{/addproduct}" th:object="${product}" method="post">
-        <input type="hidden" id="person" th:value="${thePerson}">
-        <label for="name">Nafn vöru</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Vörunafn" autofocus>
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-
-        <!--    <span th:if="${#fields.hasErrors('isInShoppingList')}" th:errors="*{isInShoppingList}"></span>-->
-        <input type="submit" value="Skrá vöru">
-    </form>
-
     <h2>Vörur</h2>
     <div>
         <table>
             <tr>
                 <th> Vara </th>
+                <th> Henda </th>
             </tr>
             <span th:each="prod : ${products}">
                 <tr>
                     <td th:text="${prod.getName()}"></td>
+                    <td><a class = "btn btn-danger btn-sm" th:href="@{/products/delete/{id}(id = ${prod.getId()})}">Henda</a></td>
                 </tr>
             </span>
         </table>
     </div>
-
-
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

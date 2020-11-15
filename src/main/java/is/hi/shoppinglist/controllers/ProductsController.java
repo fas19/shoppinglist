@@ -45,6 +45,10 @@ public class ProductsController {
         Product product = new Product();
         model.addAttribute(product);
         model.addAttribute(thePerson);
+
+        List<Product> userProducts = productService.findByUserId(thePerson.getId());
+
+        model.addAttribute("products", userProducts);
         return"addproduct";
     }
 
@@ -56,10 +60,11 @@ public class ProductsController {
 
         Person person = userService.findUserByUsername(username);
         product.setPerson(person);
+        product.setInShoppingList(true);
 
         productService.save(product);
 
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/addproduct");
     }
 
     @RequestMapping(value = "/products/change/{id}", method = RequestMethod.GET)
@@ -78,6 +83,19 @@ public class ProductsController {
         Person person = userService.findUserByUsername(username);
         if(product.getPerson().getId()== person.getId())
             productService.delete(product);
-        return new ModelAndView("redirect:/products");
+        return new ModelAndView("redirect:/deleteproduct");
+    }
+
+    @RequestMapping(value="/deleteproduct")
+    public String deleteProducts(@CurrentSecurityContext(expression = "authentication.name") String username, Model model){
+
+        Person person = userService.findUserByUsername(username);
+
+        List<Product> userProducts = productService.findByUserId(person.getId());
+
+        model.addAttribute("products", userProducts);
+
+        return "deleteproduct";
+
     }
 }
