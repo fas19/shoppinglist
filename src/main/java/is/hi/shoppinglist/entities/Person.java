@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "User")
-public class User {
+@Entity
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,14 +23,14 @@ public class User {
     private String passwordConfirmation;
 
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Product> pages;
 
-    public User() {
+    public Person() {
     }
 
-    public User(String name) {
+    public Person(String name) {
         this.name = name;
     }
 

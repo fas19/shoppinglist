@@ -1,10 +1,9 @@
 package is.hi.shoppinglist.controllers;
 
+import is.hi.shoppinglist.entities.Person;
 import is.hi.shoppinglist.entities.Product;
-import is.hi.shoppinglist.entities.User;
-import is.hi.shoppinglist.services.ProductService;
 import is.hi.shoppinglist.services.implementation.ProductServiceImplementation;
-import is.hi.shoppinglist.services.implementation.UserServiceImplementation;
+import is.hi.shoppinglist.services.implementation.PersonServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ import java.util.List;
 @Controller
 public class ProductsController {
     @Autowired
-    UserServiceImplementation userService;
+    PersonServiceImplementation userService;
 
     @Autowired
     ProductServiceImplementation productService;
@@ -29,9 +28,9 @@ public class ProductsController {
     @RequestMapping("/products")
     private String getProducts(@CurrentSecurityContext(expression = "authentication.name") String username, Model model){
 
-        User user = userService.findUserByUsername(username);
+        Person person = userService.findUserByUsername(username);
 
-        List<Product> userProducts = productService.findByUserId(user.getId());
+        List<Product> userProducts = productService.findByUserId(person.getId());
 
         model.addAttribute("products", userProducts);
 
@@ -42,10 +41,10 @@ public class ProductsController {
     @RequestMapping(value="/addproduct", method = RequestMethod.GET)
     public String addProductForm(@CurrentSecurityContext(expression = "authentication.name") String username, Model model){
 
-        User theUser = userService.findUserByUsername(username);
+        Person thePerson = userService.findUserByUsername(username);
         Product product = new Product();
         model.addAttribute(product);
-        model.addAttribute(theUser);
+        model.addAttribute(thePerson);
         return"addproduct";
     }
 
@@ -55,8 +54,8 @@ public class ProductsController {
             return new ModelAndView("/addproduct");
         }
 
-        User user = userService.findUserByUsername(username);
-        product.setUser(user);
+        Person person = userService.findUserByUsername(username);
+        product.setPerson(person);
 
         productService.save(product);
 
@@ -67,8 +66,8 @@ public class ProductsController {
     public ModelAndView changeProduct(@CurrentSecurityContext(expression = "authentication.name") String username, @PathVariable("id")long id, Model model){
         Product product = productService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid Product ID"));
         product.setInShoppingList(!product.isIsInShoppingList());
-        User user = userService.findUserByUsername(username);
-        if (product.getUser().getId()==user.getId())
+        Person person = userService.findUserByUsername(username);
+        if (product.getPerson().getId()== person.getId())
             productService.save(product);
         return new ModelAndView("redirect:/products");
     }
@@ -76,8 +75,8 @@ public class ProductsController {
     @RequestMapping(value="/products/delete/{id}", method=RequestMethod.GET)
     public ModelAndView deleteProduct(@CurrentSecurityContext(expression = "authentication.name") String username, @PathVariable("id")long id, Model model){
         Product product = productService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid product ID"));
-        User user = userService.findUserByUsername(username);
-        if(product.getUser().getId()==user.getId())
+        Person person = userService.findUserByUsername(username);
+        if(product.getPerson().getId()== person.getId())
             productService.delete(product);
         return new ModelAndView("redirect:/products");
     }

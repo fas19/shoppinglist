@@ -2,7 +2,7 @@ package is.hi.shoppinglist.entities;
 
 import javax.persistence.*;
 
-@Entity(name="Product")
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,23 +13,27 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Person person;
 
     public Product() {
     }
 
-    public Product(String name, boolean isInShoppingList, User user) {
+    public Product(String name, boolean isInShoppingList, Person person) {
         this.name = name;
         this.isInShoppingList = isInShoppingList;
-        this.user = user;
+        this.person = person;
     }
 
-    public User getUser() {
-        return user;
+    public boolean isInShoppingList() {
+        return isInShoppingList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public long getId() {
@@ -55,5 +59,6 @@ public class Product {
     public void setInShoppingList(boolean inShoppingList) {
         this.isInShoppingList = inShoppingList;
     }
+
 
 }

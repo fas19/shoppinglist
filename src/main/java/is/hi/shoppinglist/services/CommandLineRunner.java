@@ -1,9 +1,7 @@
 package is.hi.shoppinglist.services;
 
-import is.hi.shoppinglist.entities.Product;
-import is.hi.shoppinglist.entities.User;
 import is.hi.shoppinglist.repositorys.ProductRepository;
-import is.hi.shoppinglist.repositorys.UserRepository;
+import is.hi.shoppinglist.repositorys.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,7 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
     ProductRepository pr;
 
     @Autowired
-    UserRepository urr;
+    PersonRepository urr;
 
     @Override
     public void run(String... args) throws Exception {

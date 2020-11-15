@@ -1,9 +1,8 @@
 package is.hi.shoppinglist.services.implementation;
 
-import is.hi.shoppinglist.entities.User;
-import is.hi.shoppinglist.repositorys.ProductRepository;
-import is.hi.shoppinglist.repositorys.UserRepository;
-import is.hi.shoppinglist.services.UserService;
+import is.hi.shoppinglist.entities.Person;
+import is.hi.shoppinglist.repositorys.PersonRepository;
+import is.hi.shoppinglist.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,42 +15,42 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Service
-public class UserServiceImplementation implements UserService {
+public class PersonServiceImplementation implements PersonService {
     private static final String ROLE_USER = "ROLE_USER";
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
 
 
     @Autowired
-    public UserServiceImplementation (UserRepository userRepository){
-        this.userRepository = userRepository;
+    public PersonServiceImplementation(PersonRepository personRepository){
+        this.personRepository = personRepository;
     }
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User registerNewUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public Person registerNewUser(Person person) {
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        return personRepository.save(person);
     }
     //hlutur af spring security
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-        final User user = userRepository.findByEmail(email);
-        if (user == null) {
+        final Person person = personRepository.findByEmail(email);
+        if (person == null) {
             throw new UsernameNotFoundException("No user found with username: " + email);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, getAuthorities(ROLE_USER));
+        return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), true, true, true, true, getAuthorities(ROLE_USER));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return Arrays.asList(new SimpleGrantedAuthority(role));
     }
 
-    public User findUserByUsername(String email){
-        return userRepository.findByEmail(email);
+    public Person findUserByUsername(String email){
+        return personRepository.findByEmail(email);
     }
 
     @Override
-    public User save(User user) {
-        return null;
+    public Person save(Person person) {
+        return personRepository.save(person);
     }
 }

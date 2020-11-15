@@ -45,7 +45,7 @@ public class ProductServiceImplementation implements ProductService {
         List<Product> userProducts = new ArrayList<>();
 
         for (Product temp : all){
-            if (temp.getUser().getId()==id){
+            if (temp.getPerson().getId()==id){
                 userProducts.add(temp);
             }
         }

@@ -1,15 +1,11 @@
 package is.hi.shoppinglist.repositorys;
 
-import is.hi.shoppinglist.entities.Product;
-import is.hi.shoppinglist.entities.User;
+import is.hi.shoppinglist.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
     //Vista vöru
-    User save(User user);
+    Person save(Person person);
     //Fjarlægja vöru
 //    void delete(User user);
     //Finna allar vörur
@@ -19,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //finna eftir id
     //Optional<User> findById(Long id);
 
-    User findByEmail(String email);
+    Person findByEmail(String email);
 
 }
